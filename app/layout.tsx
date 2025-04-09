@@ -18,6 +18,9 @@ export const metadata: Metadata = {
     "huis verkopen zonder Funda",
     "woning verkopen zonder kosten",
   ],
+  icons: {
+    icon: '/favicon.png',
+  },
   openGraph: {
     title: "Huis verkopen zonder makelaar | verkoopuwhuis.nu",
     description:
