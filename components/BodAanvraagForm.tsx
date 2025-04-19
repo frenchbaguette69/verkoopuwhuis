@@ -6,6 +6,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
+import { useToast } from "@/hooks/use-toast";
 
 export default function BodAanvraagForm() {
   const [agreed, setAgreed] = useState(false);
@@ -26,38 +27,54 @@ export default function BodAanvraagForm() {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setLoading(true);
+  const { toast } = useToast();
 
-    try {
-      const res = await fetch('/api/contact', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData),
+const handleSubmit = async (e: React.FormEvent) => {
+  e.preventDefault();
+  setLoading(true);
+
+  try {
+    const res = await fetch('/api/contact', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(formData),
+    });
+
+    if (res.ok) {
+      setSuccess(true);
+      setFormData({
+        adres: '',
+        voornaam: '',
+        achternaam: '',
+        email: '',
+        telefoon: '',
+        bedrag: '',
+        omschrijving: '',
       });
+      setAgreed(false);
 
-      if (res.ok) {
-        setSuccess(true);
-        setFormData({
-          adres: '',
-          voornaam: '',
-          achternaam: '',
-          email: '',
-          telefoon: '',
-          bedrag: '',
-          omschrijving: '',
-        });
-        setAgreed(false);
-      } else {
-        alert('Er is iets misgegaan bij het versturen.');
-      }
-    } catch (error) {
-      alert('Er trad een fout op.');
-    } finally {
-      setLoading(false);
+      toast({
+        title: "Aanvraag verstuurd!",
+        description: "We nemen binnen 24 uur contact met je op.",
+      });
+    } else {
+      toast({
+        title: "Er is iets misgegaan",
+        description: "Probeer het later opnieuw of neem contact op.",
+        variant: "destructive",
+      });
     }
-  };
+  } catch (error) {
+    toast({
+      title: "Netwerkfout",
+      description: "Controleer je internetverbinding en probeer opnieuw.",
+      variant: "destructive",
+    });
+  } finally {
+    setLoading(false);
+  }
+};
+
 
   return (
     <form onSubmit={handleSubmit} className="max-w-xl mx-auto bg-white p-6 md:p-8 rounded-xl shadow-md space-y-6">

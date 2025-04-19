@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import Navbar from "@/components/NavBar";
 import { Footer } from "@/components/Footer";
+import { Toaster } from "@/components/ui/toaster";
 
 export const metadata: Metadata = {
   title: "Huis verkopen zonder makelaar | Direct bod ontvangen",
@@ -50,6 +51,7 @@ export default function RootLayout({
       <body>
         <Navbar />
         {children}
+        <Toaster />
         <Footer />
       </body>
     </html>
