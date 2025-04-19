@@ -8,46 +8,39 @@ export async function POST(req: Request) {
   try {
     // Mail naar jezelf & je team
     await resend.emails.send({
-      from: 'verkoopuwhuis.nu <noreply@verkoopuwhuis.nu>',
+      from: 'Verkoop Uw Huis <noreply@verkoopuwhuis.nu>',
       to: ['marcowammes@outlook.com', 'info@verkoopuwhuis.nu'],
-      subject: 'Nieuw bodformulier ingevuld',
+      replyTo: body.email,
+      subject: 'Nieuwe bodaanvraag via verkoopuwhuis.nu',
+      text: `
+Er is een nieuw bodformulier ingevuld.
+
+Naam: ${body.voornaam} ${body.achternaam}
+E-mail: ${body.email}
+Telefoon: ${body.telefoon}
+Adres: ${body.adres}
+Gewenst bedrag: ${body.bedrag}
+Omschrijving woning: ${body.omschrijving}
+      `,
       html: `
   <div style="font-family: Arial, sans-serif; background-color: #f9f9f9; padding: 20px;">
     <table style="max-width: 600px; margin: 0 auto; background-color: #ffffff; border-radius: 8px; overflow: hidden;">
-      <tr style="background-color: #0a1128;">
+      <tr style="background-color: #ffffff;">
         <td style="padding: 20px; text-align: center;">
           <img src="https://verkoopuwhuis.nu/logo.png" alt="verkoopuwhuis.nu" width="120" style="margin-bottom: 10px;" />
-          <h1 style="color: white; font-size: 20px; margin: 0;">Nieuwe aanvraag ontvangen</h1>
+          <h1 style="color: #000; font-size: 20px; margin: 0;">Nieuwe aanvraag ontvangen</h1>
         </td>
       </tr>
       <tr>
         <td style="padding: 24px;">
           <p style="font-size: 16px; color: #333;">Er is zojuist een nieuwe bodaanvraag ingevuld:</p>
           <table style="width: 100%; font-size: 15px; color: #444;">
-            <tr>
-              <td style="padding: 8px 0;"><strong>Naam:</strong></td>
-              <td>${body.voornaam} ${body.achternaam}</td>
-            </tr>
-            <tr>
-              <td style="padding: 8px 0;"><strong>E-mailadres:</strong></td>
-              <td>${body.email}</td>
-            </tr>
-            <tr>
-              <td style="padding: 8px 0;"><strong>Telefoonnummer:</strong></td>
-              <td>${body.telefoon}</td>
-            </tr>
-            <tr>
-              <td style="padding: 8px 0;"><strong>Adres:</strong></td>
-              <td>${body.adres}</td>
-            </tr>
-            <tr>
-              <td style="padding: 8px 0;"><strong>Gewenst bedrag:</strong></td>
-              <td>${body.bedrag}</td>
-            </tr>
-            <tr>
-              <td style="padding: 8px 0; vertical-align: top;"><strong>Omschrijving woning:</strong></td>
-              <td>${body.omschrijving}</td>
-            </tr>
+            <tr><td style="padding: 8px 0;"><strong>Naam:</strong></td><td>${body.voornaam} ${body.achternaam}</td></tr>
+            <tr><td style="padding: 8px 0;"><strong>E-mailadres:</strong></td><td>${body.email}</td></tr>
+            <tr><td style="padding: 8px 0;"><strong>Telefoonnummer:</strong></td><td>${body.telefoon}</td></tr>
+            <tr><td style="padding: 8px 0;"><strong>Adres:</strong></td><td>${body.adres}</td></tr>
+            <tr><td style="padding: 8px 0;"><strong>Gewenst bedrag:</strong></td><td>${body.bedrag}</td></tr>
+            <tr><td style="padding: 8px 0; vertical-align: top;"><strong>Omschrijving woning:</strong></td><td>${body.omschrijving}</td></tr>
           </table>
           <p style="margin-top: 24px; font-size: 14px; color: #888;">
             Verstuurd via verkoopuwhuis.nu – ${new Date().toLocaleString('nl-NL')}
@@ -56,21 +49,31 @@ export async function POST(req: Request) {
       </tr>
     </table>
   </div>
-`,
+      `,
     });
 
     // Bevestiging naar klant
     await resend.emails.send({
-      from: 'verkoopuwhuis.nu <noreply@verkoopuwhuis.nu>',
+      from: 'Verkoop Uw Huis <noreply@verkoopuwhuis.nu>',
       to: body.email,
-      subject: 'Bedankt voor je aanvraag bij verkoopuwhuis.nu',
+      replyTo: 'info@verkoopuwhuis.nu',
+      subject: 'Bevestiging van je aanvraag bij verkoopuwhuis.nu',
+      text: `
+Hi ${body.voornaam},
+
+Bedankt voor je aanvraag via verkoopuwhuis.nu.
+We nemen binnen 24 uur contact met je op om je aanvraag te bespreken.
+
+Met vriendelijke groet,  
+Het team van verkoopuwhuis.nu
+      `,
       html: `
         <div style="font-family: Arial, sans-serif; background-color: #f4f4f4; padding: 20px;">
           <table style="max-width: 600px; margin: 0 auto; background-color: #ffffff; border-radius: 8px;">
-            <tr style="background-color: #0a1128;">
+            <tr style="background-color: #ffffff;">
               <td style="padding: 20px; text-align: center;">
                 <img src="https://verkoopuwhuis.nu/logo.png" alt="verkoopuwhuis.nu" width="100" style="margin-bottom: 10px;" />
-                <h2 style="color: white; margin: 0;">Bedankt voor je aanvraag!</h2>
+                <h2 style="color: #000; margin: 0;">Bedankt voor je aanvraag!</h2>
               </td>
             </tr>
             <tr>
