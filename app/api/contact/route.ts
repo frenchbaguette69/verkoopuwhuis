@@ -6,9 +6,10 @@ export async function POST(req: Request) {
   const body = await req.json();
 
   try {
+    // Mail naar jezelf & je team
     await resend.emails.send({
       from: 'verkoopuwhuis.nu <noreply@verkoopuwhuis.nu>',
-      to: 'marcowammes@outlook.com',
+      to: ['marcowammes@outlook.com', 'info@verkoopuwhuis.nu'],
       subject: 'Nieuw bodformulier ingevuld',
       html: `
   <div style="font-family: Arial, sans-serif; background-color: #f9f9f9; padding: 20px;">
@@ -58,8 +59,37 @@ export async function POST(req: Request) {
 `,
     });
 
+    // Bevestiging naar klant
+    await resend.emails.send({
+      from: 'verkoopuwhuis.nu <noreply@verkoopuwhuis.nu>',
+      to: body.email,
+      subject: 'Bedankt voor je aanvraag bij verkoopuwhuis.nu',
+      html: `
+        <div style="font-family: Arial, sans-serif; background-color: #f4f4f4; padding: 20px;">
+          <table style="max-width: 600px; margin: 0 auto; background-color: #ffffff; border-radius: 8px;">
+            <tr style="background-color: #0a1128;">
+              <td style="padding: 20px; text-align: center;">
+                <img src="https://verkoopuwhuis.nu/logo.png" alt="verkoopuwhuis.nu" width="100" style="margin-bottom: 10px;" />
+                <h2 style="color: white; margin: 0;">Bedankt voor je aanvraag!</h2>
+              </td>
+            </tr>
+            <tr>
+              <td style="padding: 24px; color: #333;">
+                <p>Hi ${body.voornaam},</p>
+                <p>Bedankt voor het invullen van het bodformulier op <strong>verkoopuwhuis.nu</strong>.</p>
+                <p>We nemen <strong>binnen 24 uur</strong> contact met je op om je aanvraag te bespreken.</p>
+                <p>Heb je in de tussentijd vragen? Mail gerust naar <a href="mailto:info@verkoopuwhuis.nu">info@verkoopuwhuis.nu</a>.</p>
+                <p style="margin-top: 24px;">Met vriendelijke groet,<br />Het team van verkoopuwhuis.nu</p>
+              </td>
+            </tr>
+          </table>
+        </div>
+      `,
+    });
+
     return Response.json({ success: true });
   } catch (error) {
+    console.error('Mailfout:', error);
     return Response.json({ error: 'Er is iets misgegaan' }, { status: 500 });
   }
 }
