@@ -11,6 +11,6 @@ jobs:
     steps:
       - name: POST naar generate-blog API
         run: |
-          curl -X POST https://verkoopuwhuis.nu/api/generate-blog \
+          curl -L -X POST https://verkoopuwhuis.nu/api/generate-blog \
             -H "Content-Type: application/json" \
-            -d '{"trigger":"cron"}'
+            -d '{}'
