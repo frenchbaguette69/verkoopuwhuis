@@ -1,0 +1,15 @@
+name: Dagelijkse Blog Generatie
+
+on:
+  schedule:
+    - cron: "0 6 * * *" # Dagelijks om 08:00 Nederlandse zomertijd (06:00 UTC)
+
+jobs:
+  generate-blog:
+    runs-on: ubuntu-latest
+    steps:
+      - name: POST naar generate-blog API
+        run: |
+          curl -X POST https://verkoopuwhuis.nu/api/generate-blog \
+            -H "Content-Type: application/json" \
+            -d '{"trigger":"cron"}'
