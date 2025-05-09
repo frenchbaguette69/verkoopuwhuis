@@ -16,8 +16,9 @@ function getIdFromSlug(slug: string): number | null {
 }
 
 // Metadata genereren voor SEO
-export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
-  const id = getIdFromSlug(params.slug) // ✅ geen await!
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+  const { slug } = await params
+  const id = getIdFromSlug(slug)
 
   if (!id) {
     return {
@@ -48,6 +49,7 @@ export async function generateMetadata({ params }: { params: { slug: string } })
     },
   }
 }
+
 
 
 
@@ -131,30 +133,31 @@ function highlightImportantSentences(content: string): string {
   return enhancedContent
 }
 
-export default async function BlogPage(props: { params: { slug: string } }) {
-  const slug = props.params.slug
-const id = getIdFromSlug(slug)
-if (!id) {
-  notFound()
-}
+export default async function BlogPage({
+  params,
+}: {
+  params: Promise<{ slug: string }>
+}) {
+  const { slug } = await params
+  const id = getIdFromSlug(slug)
 
-const post = await prisma.post.findUnique({
-  where: { id },
-})
+  if (!id) {
+    notFound()
+  }
 
-if (!post) {
-  notFound()
-}
+  const post = await prisma.post.findUnique({
+    where: { id },
+  })
 
   if (!post) {
     notFound()
   }
 
-  // Controleer of de slug correct is, zo niet, redirect
   const correctSlug = generateSlug(post.title, post.id)
   if (slug !== correctSlug) {
     notFound()
   }
+
 
   // Bereken leestijd
   const readingTime = calculateReadingTime(post.content)
