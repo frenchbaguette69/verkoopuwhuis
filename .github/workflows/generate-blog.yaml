@@ -3,7 +3,8 @@ name: Dagelijkse Blog Generatie
 on:
   schedule:
     - cron: "0 6 * * *" # Dagelijks om 08:00 Nederlandse zomertijd (06:00 UTC)
-
+  workflow_dispatch:
+  
 jobs:
   generate-blog:
     runs-on: ubuntu-latest
