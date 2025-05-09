@@ -77,10 +77,12 @@ Afsluiting:
 Tone of voice: Deskundig, empathisch, betrouwbaar.
 
 BELANGRIJK:
-- Voeg de volgende tags **uitsluitend helemaal onderaan de blogtekst** toe, zonder uitleg of tekst ervoor of erna:
+Sluit je HTML af met exact deze tags, zonder uitleg of opmaak eromheen:
 
-<metaTitle>Vul hier de meta title in</metaTitle>
-<metaDescription>Vul hier de meta description in</metaDescription>
+<metaTitle>...</metaTitle>
+<metaDescription>...</metaDescription>
+
+⚠️ Let op: vul deze velden altijd in. Ze zijn verplicht.
 
 Er mag niets boven de <h1> staan. Alleen geldige HTML, geen uitleg.
 `
