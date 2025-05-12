@@ -88,7 +88,7 @@ Er mag niets boven de <h1> staan. Alleen geldige HTML, geen uitleg.
 `
 
   const response = await client.chat.completions.create({
-    model: 'llama3-70b-8192',
+    model: 'llama-3.3-70b-versatile',
     messages: [
       {
         role: 'user',
