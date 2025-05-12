@@ -1,9 +1,11 @@
 import { prisma } from "@/lib/prisma"
 import { NextResponse } from "next/server"
+import fs from "fs"
+import path from "path"
 
-export async function GET() {
-  const baseUrl = "https://verkoopuwhuis.nu"
+const baseUrl = "https://verkoopuwhuis.nu"
 
+async function generateSitemapXml() {
   const posts = await prisma.post.findMany({
     orderBy: { createdAt: "desc" },
   })
@@ -29,19 +31,36 @@ export async function GET() {
     <loc>${baseUrl}/${route}</loc>
     <changefreq>daily</changefreq>
     <priority>0.7</priority>
-  </url>
-`
+  </url>`
     )
     .join("")
 
-  const xml = `<?xml version="1.0" encoding="UTF-8"?>
-  <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-    ${urls}
-  </urlset>`
+  return `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  ${urls}
+</urlset>`
+}
+
+export async function GET() {
+  const xml = await generateSitemapXml()
 
   return new NextResponse(xml, {
     headers: {
       "Content-Type": "application/xml",
     },
   })
+}
+
+export async function POST() {
+  try {
+    const xml = await generateSitemapXml()
+
+    const filePath = path.join(process.cwd(), "public", "sitemap.xml")
+    fs.writeFileSync(filePath, xml, "utf8")
+
+    return new NextResponse("Sitemap opgeslagen", { status: 200 })
+  } catch (err) {
+    console.error("Sitemap genereren mislukt:", err)
+    return new NextResponse("Fout bij genereren sitemap", { status: 500 })
+  }
 }
