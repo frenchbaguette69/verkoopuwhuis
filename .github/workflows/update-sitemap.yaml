@@ -1,15 +1,15 @@
-name: Dagelijkse Blog Generatie
+name: dagelijks sitemap update
 
 on:
   schedule:
-    - cron: "0 6 * * *" # Dagelijks om 08:00 Nederlandse zomertijd (06:00 UTC)
+    - cron: "0 7 * * *" # Dagelijks om 08:00 Nederlandse zomertijd (06:00 UTC)
   workflow_dispatch:
   
 jobs:
   generate-blog:
     runs-on: ubuntu-latest
     steps:
-      - name: POST naar generate-blog API
+      - name: POST naar sitemap API
         run: |
           curl -L -X POST https://verkoopuwhuis.nu/api/sitemap \
             -H "Content-Type: application/json" \
