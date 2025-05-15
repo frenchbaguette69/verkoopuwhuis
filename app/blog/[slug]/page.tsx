@@ -239,9 +239,9 @@ export default async function BlogPage({
             </div>
 
             {/* Titel */}
-            <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 leading-tight mb-4">
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 leading-tight mb-4">
               {post.title}
-            </h1>
+            </h2>
 
             {/* Meta info */}
             <div className="flex flex-wrap items-center text-sm text-gray-500 mb-6 gap-x-6 gap-y-2">
