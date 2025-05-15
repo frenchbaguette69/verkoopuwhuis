@@ -7,7 +7,7 @@ import { prisma } from '@/lib/prisma'
 const internalPages = [
   {
     url: 'https://www.verkoopuwhuis.nu/',
-    keywords: ['verkoopuwhuis.nu', 'woning verkopen', 'huis verkopen zonder makelaar', 'huis opkopen'],
+    keywords: ['huis snel verkopen', 'woning verkopen', 'huis verkopen zonder makelaar', 'huis verkopen bij scheiding'],
   },
   {
     url: 'https://www.verkoopuwhuis.nu/huis-verkopen',
@@ -15,7 +15,7 @@ const internalPages = [
   },
   {
     url: 'https://www.verkoopuwhuis.nu/contact',
-    keywords: ['contact', 'vrijblijvend bod aanvragen', 'neem contact op', 'bel ons'],
+    keywords: ['contact', 'huis snel verkopen', 'neem contact op', 'belleginspand verkopen'],
   },
 ]
 
@@ -46,7 +46,7 @@ Specificaties voor de blogpost:
 
 Taal: Nederlands
 
-Vormgeving: Gebruik zuivere HTML-tags (<h1>, <h2>, <h3>, <p>, <ul>, <li>, <strong>, etc.)
+Vormgeving: Gebruik zuivere HTML-tags (<h2>, <h3>, (h4>, <p>, <ul>, <li>, <strong>, etc.)
 
 Titel: Plaats het gekozen keyword in een <h1>.
 
@@ -59,20 +59,23 @@ Kerntekst:
 - Benoem de voordelen van je huis verkopen aan verkoopuwhuis.nu (snelheid, geen makelaar, geen kosten).
 - Voeg minstens 1 lijst toe met tips of voordelen in <ul><li>-vorm.
 - Noem verkoopuwhuis.nu meerdere keren als dé oplossing voor snelle woningverkoop.
+- gebruik strong voornamelijk voor de internal linking
 
 SEO-eisen:
 
 - Gebruik het gekozen keyword minimaal 5 keer verspreid door de tekst.
-- Zorg dat het keyword voorkomt in de <h1>, tenminste 1 <h2>, en in meerdere paragrafen.
-- Gebruik synoniemen en verwante termen zoals "woning verkopen", "huis opkopen", "direct bod", "woning bij scheiding", enz.
+- Zorg dat het keyword voorkomt in de metatitle, tenminste 3 keer in <h2>, en in meerdere paragrafen.
+- Gebruik synoniemen en verwante termen zoals "woning verkopen", "huis opkopen", "huis snel verkopen", "woning verkopen bij scheiding", enz.
 - Vermijd keyword-stuffing: schrijf natuurlijk en menselijk.
+- schrijf geen h1 want wij gebruiken de titel al als h1
+- meta title max 5-7 woorden en daarnaast nog afsluiten met "| verkoopuwhuis.nu"
 
-Lengte: Minimaal 1000 woorden.
+Lengte: Minimaal 2000 woorden.
 
 Afsluiting:
 
 - Vat kort samen waarom verkoopuwhuis.nu de juiste keuze is.
-- Voeg een duidelijke call-to-action toe met link naar: "Vraag vrijblijvend een bod aan via verkoopuwhuis.nu".
+- Voeg een duidelijke call-to-action toe met link naar /contact: "huis snel verkopen".
 
 Tone of voice: Deskundig, empathisch, betrouwbaar.
 
