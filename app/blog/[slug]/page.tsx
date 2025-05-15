@@ -267,9 +267,11 @@ export default async function BlogPage({
             </div>
 
             {/* Intro tekst */}
-            <p className="text-xl text-gray-700 leading-relaxed border-l-4 border-[#2baf57] pl-4 italic">
-              {intro || post.metaDescription}
-            </p>
+            <p
+  className="text-xl text-gray-700 leading-relaxed border-l-4 border-[#2baf57] pl-4 italic"
+  dangerouslySetInnerHTML={{ __html: intro || post.metaDescription }}
+/>
+
           </div>
         </div>
       </header>
